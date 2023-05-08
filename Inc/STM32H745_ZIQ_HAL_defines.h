@@ -1,0 +1,26 @@
+/*
+ * STM32H745_ZIQ_HAL_defines.h
+ *
+ *  Created on: May 6, 2023
+ *      Author: MPV3KOR
+ */
+
+#ifndef STM32H745_ZIQ_HAL_DEFINES_H_
+#define STM32H745_ZIQ_HAL_DEFINES_H_
+
+#define PERIPHERAL_BASE 0x40000000UL
+#define RCC_AHB4ENR_OFFSET 0x0E0UL
+#define GPIO_BASE       PERIPHERAL_BASE + 0x18000000UL
+#define GPIO_B_BASE     GPIO_BASE + 0x20400UL
+#define GPIO_E_BASE     GPIO_BASE + 0x21000UL
+#define PIN1	1UL<<1
+#define PIN14   1UL<<14
+#define PIN0    1UL<<0
+
+#define RESETPIN1	1UL<<17
+#define RESETPIN14   1UL<<30
+#define RESETPIN0    1UL<<16
+
+
+
+#endif /* STM32H745_ZIQ_HAL_DEFINES_H_ */
