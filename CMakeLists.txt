@@ -1,0 +1,72 @@
+cmake_minimum_required(VERSION 3.26.3)
+
+
+set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_SOURCE_DIR}/gcc-arm-none-eabi.cmake)
+set(CMAKE_LINK_LIBRARIES_ONLY_TARGETS OFF)
+project(Pruthvi_STM32H7)
+
+set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+
+
+
+
+set(MCU_FAMILY STM32H7xx)
+set(MCU_MODEL STM32H745xx)
+set(CPU_PARAMETERS -mfpu=fpv4-sp-d16 
+                -mfloat-abi=hard 
+                -mthumb)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+
+
+set(STARTUP_SCRIPT ${CMAKE_CURRENT_SOURCE_DIR}/Startup/startup_stm32h745zitx.s)
+set(MCU_LINKER_SCRIPT_FLASH  ${CMAKE_CURRENT_SOURCE_DIR}/Linker_scripts/STM32H745ZITX_FLASH.ld)
+set(MCU_LINKER_SCRIPT_RAM  ${CMAKE_CURRENT_SOURCE_DIR}/Linker_scripts/STM32H745ZITX_RAM.ld)
+
+set(EXECUTABLE ${CMAKE_PROJECT_NAME})
+enable_language(C ASM CXX)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+
+set(PROJECT_INCLUDE_DIRECTORIES
+${CMAKE_CURRENT_SOURCE_DIR}/Inc)
+
+file(GLOB_RECURSE PROJECT_SOURCES FOLLOW_SYMLINKS
+    ${CMAKE_CURRENT_SOURCE_DIR}/Src/*.c)
+
+add_executable(${EXECUTABLE} 
+               ${PROJECT_SOURCES}
+               ${STARTUP_SCRIPT} )
+
+target_include_directories(${EXECUTABLE} PRIVATE 
+                            ${PROJECT_INCLUDE_DIRECTORIES})
+
+target_compile_options(${EXECUTABLE} PRIVATE
+${CPU_PARAMETERS}
+-mcpu=cortex-m4 
+-Wall
+-Wextra
+-Wpedantic
+)
+
+target_link_options(${EXECUTABLE} PRIVATE
+    -T${MCU_LINKER_SCRIPT_FLASH}
+     ${CPU_PARAMETERS}
+    -Wl,-Map=${CMAKE_PROJECT_NAME}.map
+    -Wl,--start-group
+    -lc
+    -lm
+    -Wl,--end-group
+)
+
+add_custom_command(TARGET ${EXECUTABLE} POST_BUILD
+    COMMAND ${CMAKE_SIZE} $<TARGET_FILE:${EXECUTABLE}>)
+
+    add_custom_command(TARGET ${EXECUTABLE} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O ihex $<TARGET_FILE:${EXECUTABLE}> ${EXECUTABLE}.hex
+    COMMAND ${CMAKE_OBJCOPY} -O binary $<TARGET_FILE:${EXECUTABLE}> ${EXECUTABLE}.bin
+    )
