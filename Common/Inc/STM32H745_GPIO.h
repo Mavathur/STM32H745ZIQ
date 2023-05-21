@@ -24,9 +24,14 @@ void vBlinkOrangeLED(BlinkInfo ts);
 void vBlinkYellowLED(BlinkInfo ts);
 
 
+#define GPIOA_MODER     *((volatile unsigned int*)(GPIO_A_BASE + 0x00UL))
+
 #define GPIOB_MODER     *((volatile unsigned int*)(GPIO_B_BASE + 0x00UL))
 #define GPIOB_ODR       *((volatile unsigned int*)(GPIO_B_BASE + 0x14UL))
 #define GPIOB_BSRR      *((volatile unsigned int*)(GPIO_B_BASE + 0x18UL))
+
+#define GPIOC_MODER     *((volatile unsigned int*)(GPIO_C_BASE + 0x00UL))
+
 
 #define GPIOE_MODER     *((volatile unsigned int*)(GPIO_E_BASE + 0x00UL))
 #define GPIOE_ODR       *((volatile unsigned int*)(GPIO_E_BASE + 0x14UL))

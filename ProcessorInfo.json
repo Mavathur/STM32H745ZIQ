@@ -1,0 +1,17 @@
+{
+"Processor" :
+    [
+        {
+            "Name"              : "CM4",
+            "Toolchain_Version" : "11.3", 
+            "RAM_KB"            : 229,
+            "Flash_Alloc"       : 1024
+        },
+        {
+            "Name"              : "CM7",
+            "Toolchain_Version" : "11.3", 
+            "RAM_KB"            : 836,
+            "Flash_Alloc"       : 1024
+        }
+    ]
+}

@@ -17,7 +17,6 @@
  */
 
 #include "STM32H745_GPIO.h"
-#include <pthread.h>
 int main(void)
 {
 
@@ -25,10 +24,11 @@ int main(void)
 	BlinkInfo _YellowLED = {8,3};
 	BlinkInfo _RedLED = {8,6};
 
+
 	vBlinkRedLED(_RedLED);
 
-	vBlinkYellowLED(_YellowLED);
+//	vBlinkYellowLED(_YellowLED);
 
-	vBlinkGreenLED(_GreeLED);
+//	vBlinkGreenLED(_GreeLED);
 
 }
